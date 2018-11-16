@@ -127,7 +127,7 @@ function setFavorite(element) {
   let id = c.attr('id');
   $.ajax({
     url: `Api/setfavorite/${id}`,
-    type: 'GET',
+    type: 'PUT',
     success: (r) => {
       if (father.css("background-color") == "rgb(0, 0, 0)")
         father.css('background-color', "#920000");

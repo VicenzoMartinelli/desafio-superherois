@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace SuperheroWeb.Models
 {
-  public class SuperheroDTO
+  public class SuperHeroDTO
   {
     public string Id { get; set; }
     [Required]

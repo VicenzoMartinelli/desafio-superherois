@@ -32,7 +32,7 @@
           </div>
           <h3>@item.Name</h3>
           <p>@item.Description</p>
-          <img src="~/images/superheroes/@(item.Id).jpg" />
+          <img src="~/images/superheroes/@(item.Id).jpg?t=@(DateTime.Now.Ticks)" />
         </div>
       </div>
     }

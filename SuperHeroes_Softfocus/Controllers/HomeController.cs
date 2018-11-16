@@ -49,7 +49,7 @@ namespace SuperHeroes_Softfocus.Controllers
       return View(heroes);
     }
 
-    public async Task<IActionResult> Save(SuperheroDTO superhero)
+    public async Task<IActionResult> Save(SuperHeroDTO superhero)
     {
       if (!ModelState.IsValid)
         return RedirectToAction("Error");

@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Routing;
+using SuperheroWeb.Models;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -115,7 +116,46 @@ namespace SuperHeroes_Softfocus.Models
       
     }
 
-    [HttpGet("setfavorite/{id}")]
+    [HttpPost("newhero")]
+    public async Task<IActionResult> NewHero([FromBody] SuperHeroDTO model)
+    {
+      if (!ModelState.IsValid)
+        return StatusCode(StatusCodes.Status400BadRequest);
+
+      try
+      {
+        var heroSave = new SuperHero()
+        {
+          Description = model.Description,
+          Name = model.Name
+        };
+
+        await _repository.SaveOrUpdateAsync(heroSave, model.Id);
+
+        var content = model.Picture.Split(",")[1];
+
+        var path = Path.Combine(_appEnvironment.WebRootPath, @"images/superheroes") + $@"/{heroSave.Id + ".jpg"}";
+        #if DEBUG
+        path = Path.Combine(_appEnvironment.WebRootPath, @"images\superheroes") + $@"\{heroSave.Id + ".jpg"}";
+        #endif
+        System.IO.File.Delete(path);
+
+        using (FileStream SourceStream = System.IO.File.Open(path, FileMode.OpenOrCreate))
+        {
+          SourceStream.Seek(0, SeekOrigin.End);
+          await SourceStream.WriteAsync(Convert.FromBase64String(content), 0, Convert.FromBase64String(content).Length);
+        }
+
+        return Ok();
+      }
+      catch (Exception)
+      {
+        return StatusCode(StatusCodes.Status500InternalServerError);
+      }
+    }
+
+
+    [HttpPut("setfavorite/{id}")]
     public async Task<IActionResult> SetFavorite(string id)
     {
       try
