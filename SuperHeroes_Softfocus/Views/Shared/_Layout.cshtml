@@ -1,74 +1,82 @@
 ﻿<!DOCTYPE html>
 <html>
 <head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>@ViewData["Title"] - SuperHeroes_Softfocus</title>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="shortcut icon" href="~/images/logo-sm.png" type="image/x-icon" />
 
-    <environment include="Development">
-        <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.css" />
-        <link rel="stylesheet" href="~/css/site.css" />
-    </environment>
-    <environment exclude="Development">
-        <link rel="stylesheet" href="https://ajax.aspnetcdn.com/ajax/bootstrap/3.3.7/css/bootstrap.min.css"
-              asp-fallback-href="~/lib/bootstrap/dist/css/bootstrap.min.css"
-              asp-fallback-test-class="sr-only" asp-fallback-test-property="position" asp-fallback-test-value="absolute" />
-        <link rel="stylesheet" href="~/css/site.min.css" asp-append-version="true" />
-    </environment>
+  <title>@ViewData["Title"] - SuperHeroes</title>
+  <environment include="Development">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="~/lib/bootstrap/css/bootstrap.css" />
+    <link rel="stylesheet" href="~/lib/mdb/css/mdb.css" />
+    <link rel="stylesheet" href="~/css/site.css" />
+  </environment>
+  <environment exclude="Development">
+    @*<link rel="stylesheet" href="https://ajax.aspnetcdn.com/ajax/bootstrap/3.3.7/css/bootstrap.min.css"
+      asp-fallback-href="~/lib/" asp-fallback-test-class="sr-only" asp-fallback-test-property="position" asp-fallback-test-value="absolute" />*@
+    <link rel="stylesheet" href="~/css/site.min.css" asp-append-version="true" />
+  </environment>
 </head>
 <body>
-    <nav class="navbar navbar-inverse navbar-fixed-top">
-        <div class="container">
-            <div class="navbar-header">
-                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
-                    <span class="sr-only">Toggle navigation</span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                </button>
-                <a asp-area="" asp-controller="Home" asp-action="Index" class="navbar-brand">SuperHeroes_Softfocus</a>
-            </div>
-            <div class="navbar-collapse collapse">
-                <ul class="nav navbar-nav">
-                    <li><a asp-area="" asp-controller="Home" asp-action="Index">Home</a></li>
-                    <li><a asp-area="" asp-controller="Home" asp-action="About">About</a></li>
-                    <li><a asp-area="" asp-controller="Home" asp-action="Contact">Contact</a></li>
-                </ul>
-            </div>
+  <div class="container-fluid px-0 ">
+    <nav class="navbar fixed-top navbar-dark navbar-expand-lg navbar-fixed-top p-2">
+
+      <button type="button" class="navbar-toggler" data-toggle="collapse" data-target="#barraNav">
+        <i class="fa fa-align-center red fa-2x"></i>
+      </button>
+
+      <div class="collapse navbar-collapse row" id="barraNav">
+
+        <div class="col-lg-3 text-center" id="logo-left">
+          <a asp-controller="Home" asp-action="Index">
+            <img src="~/images/logo.png" id="logo" alt="Logo">
+          </a>
         </div>
+        <div class="col-lg-5 text-center" id="logo-left">
+          <a asp-controller="Home" asp-action="Index">Portal do Miranha</a>
+        </div>
+        <div class="col-lg-4 text-right d-inline">
+          @using (Html.BeginForm("Index", "Home"))
+          {
+            <div class="md-form my-0 w-100 form-inline">
+              <input class="form-control my-0 mr-1" type="text" id="inputSearch" name="filtrer" placeholder="Search" aria-label="Search" style="width: 60%;">
+              <button id="btnSearch" href="#" class="btn btn-primary w-25 m-0 d-flex justify-content-center" type="submit">
+                <i class="fa fa-search" style="font-size: 1.8em; "></i>
+              </button>
+            </div>
+          }
+        </div>
+      </div>
     </nav>
+  </div>
 
-    <partial name="_CookieConsentPartial" />
+  <div class="container-fluid body-content">
+    @RenderBody()
+  </div>   
+  <footer>
+    <p>&copy; 2018 - Desáfio Python Backend Developer Softfocus</p>
+  </footer>
 
-    <div class="container body-content">
-        @RenderBody()
-        <hr />
-        <footer>
-            <p>&copy; 2018 - SuperHeroes_Softfocus</p>
-        </footer>
-    </div>
+  <environment include="Development">
+    <script src="~/js/jquery.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
+            crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
+            crossorigin="anonymous"></script>
 
-    <environment include="Development">
-        <script src="~/lib/jquery/dist/jquery.js"></script>
-        <script src="~/lib/bootstrap/dist/js/bootstrap.js"></script>
-        <script src="~/js/site.js" asp-append-version="true"></script>
-    </environment>
-    <environment exclude="Development">
-        <script src="https://ajax.aspnetcdn.com/ajax/jquery/jquery-3.3.1.min.js"
-                asp-fallback-src="~/lib/jquery/dist/jquery.min.js"
-                asp-fallback-test="window.jQuery"
-                crossorigin="anonymous"
-                integrity="sha384-tsQFqpEReu7ZLhBV2VZlAu7zcOV+rXbYlF2cqB8txI/8aZajjp4Bqd+V6D5IgvKT">
-        </script>
-        <script src="https://ajax.aspnetcdn.com/ajax/bootstrap/3.3.7/bootstrap.min.js"
-                asp-fallback-src="~/lib/bootstrap/dist/js/bootstrap.min.js"
-                asp-fallback-test="window.jQuery && window.jQuery.fn && window.jQuery.fn.modal"
-                crossorigin="anonymous"
-                integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa">
-        </script>
-        <script src="~/js/site.min.js" asp-append-version="true"></script>
-    </environment>
+    <script src="~/js/site.js" asp-append-version="true"></script>
+    <script src="~/js/jquery.localScroll.min.js" asp-append-version="false"></script>
 
-    @RenderSection("Scripts", required: false)
+  </environment>
+  <environment exclude="Development">
+    <script src="~/js/jquery.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
+            crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
+            crossorigin="anonymous"></script>
+    <script src="~/js/site.min.js" asp-append-version="true"></script>
+    <script src="~/js/jquery.localScroll.min.js" asp-append-version="false"></script>
+  </environment>
 </body>
 </html>

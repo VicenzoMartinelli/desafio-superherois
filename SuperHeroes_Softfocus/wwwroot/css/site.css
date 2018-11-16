@@ -1,37 +1,233 @@
-﻿/* Please see documentation at https://docs.microsoft.com/aspnet/core/client-side/bundling-and-minification\ 
-for details on configuring this project to bundle and minify static web assets. */
+﻿@import url('https://fonts.googleapis.com/css?family=Muli:600|Quicksand|Roboto+Mono');
+
+:root {
+  --corP: #c31234
+}
+
+.red {
+  color: var(--corP) !important;
+  background-color: white !important;
+}
+
+nav {
+  font-family: 'Muli', sans-serif !important;
+}
+
 body {
-    padding-top: 50px;
-    padding-bottom: 20px;
+  font-family: 'Roboto Mono', monospace;
 }
 
-/* Wrapping element */
-/* Set some basic padding to keep content from hitting the edges */
-.body-content {
-    padding-left: 15px;
-    padding-right: 15px;
+#inputSearch {
+  box-shadow: 0 1px 0 0 #ab1818;
+  border-bottom: 1px solid #ab1818 !important;
+  color: #ab1818;
 }
 
-/* Carousel */
-.carousel-caption p {
-    font-size: 20px;
-    line-height: 1.4;
+.container-fluid {
+  padding-left: 0;
+  padding-right: 0;
 }
 
-/* Make .svg files in the carousel display properly in older browsers */
-.carousel-inner .item img[src$=".svg"] {
+.navbar-fixed-top {
+  box-shadow: -1px 4px 4px rgba(0, 0, 0, .5);
+  background-color: #fbfbfb;
+  color: blue !important;
+  transition: all 500ms linear;
+}
+
+  .navbar-fixed-top img {
+    width: 70px;
+  }
+
+.md-form input[type=text]:focus:not([readonly]),
+.md-form input[type=email]:focus:not([readonly]),
+.md-form input[type=tel]:focus:not([readonly]),
+.md-form input[type=password]:focus:not([readonly]),
+.md-form textarea:focus:not([readonly]),
+.md-form input[type=number]:focus:not([readonly]) {
+  box-shadow: 0 1px 0 0 #ab1818 !important;
+  border-bottom: 1px solid #ab1818 !important;
+  color: #ab1818 !important;
+}
+
+  .md-form input[type=text]:focus:not([readonly]) + label, .md-form input[type=email]:focus:not([readonly]) + label, 
+  .md-form input[type=tel]:focus:not([readonly]) + label, 
+  .md-form input[type=number]:focus:not([readonly]) + label, 
+  .md-form textarea:focus:not([readonly]) + label, 
+  .md-form input[type=password]:focus:not([readonly]) + label {
+    color: #ab1818 !important;
+  }
+
+.navbar-fixed-top .form-inline {
+  align-items: flex-end;
+  justify-content: flex-end;
+}
+
+#logo-left {
+  font-weight: bold;
+  font-size: 2em;
+  font-family: 'Muli', monospace;
+  color: #c31234;
+}
+
+  #logo-left a {
+    color: #c31234;
+  }
+
+#btnSearch {
+  width: 20% !important;
+  background: linear-gradient(to bottom, #581616 0%,#cf0404 100%);
+}
+
+#banner {
+  width: 100%;
+  margin-top: 14vh;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+  #banner > .container-fluid {
+    position: absolute;
     width: 100%;
-}
+    background-color: rgba(45, 45, 45, 0.46);
+    height: 76vh;
+    text-align: center;
+    font-family: 'Muli', sans-serif;
+    color: #ffffff;
+    font-size: 3em;
+    top: 14vh;
+    display: flex;
+    justify-content: center;
+    align-content: center;
+  }
 
-/* QR code generator */
-#qrCode {
-    margin: 15px;
-}
-
-/* Hide/rearrange for smaller screens */
-@media screen and (max-width: 767px) {
-    /* Hide captions */
-    .carousel-caption {
-        display: none;
+    #banner > .container-fluid div {
+      opacity: 1;
+      font-weight: 500;
+      padding-top: 2%;
+      color: #ffffff;
+      font-family: 'Quicksand', sans-serif;
     }
+
+#container-superheroes img {
+  width: 15em;
+  height: 20em;
+}
+
+#container-superheroes .card-body {
+  text-align: center;
+}
+
+.pagination.pagination-lg .page-item .page-link {
+  font-size: 2em;
+}
+
+.options {
+  width: 20%;
+  height: 43%;
+  top: 0px;
+  right: 0;
+  z-index: 5;
+  position: absolute;
+  opacity: 0;
+  transition: opacity linear .2s;
+}
+
+.options .favorite {
+height: 33.3%;
+background-color: #920000;
+color: white;
+opacity: 0.86;
+font-size: 2.1em;
+}
+
+.options .update{
+  background-color: #356ccb;
+  opacity: 0.86;
+  color: white;
+  height: 33%;
+  font-size: 2.1em;
+}
+.options .delete{
+  background-color: #000000;
+  opacity: 0.86;
+  font-size: 2.1em;
+  height: 33%;
+  color: white;
+}
+
+.options .favorite a {
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+}
+
+.fab {
+  width: 77px;
+  background-color: white;
+  height: 64px;
+  color: #c11032 !important;
+  border-radius: 50%;
+  box-shadow: 2px 5px 3px rgba(0, 0, 0, 0.5), 2px -5px 3px rgba(0, 0, 0, 0.25), -4px 4px 3px rgba(0, 0, 0, 0.25);
+  position: fixed;
+  bottom: 38px;
+  right: 48px;
+  font-size: 2.5em;
+  display: flex;
+  cursor: pointer;
+  justify-content: center;
+  align-items: center;
+}
+
+.fab:hover {
+  transform: scale(1.15);
+}
+
+.options > div {
+border-radius: 65px;
+display: flex;
+justify-content: center;
+align-items: center;
+}
+
+.options > div:hover {
+font-size: 3em !important;
+}
+
+.image-preview-input {
+  position: relative;
+  overflow: hidden;
+  margin: 0px;
+  color: #333;
+  background-color: #fff;
+  border-color: #ccc;
+}
+
+  .image-preview-input input[type=file] {
+    position: absolute;
+    top: 0;
+    right: 0;
+    margin: 0;
+    padding: 0;
+    font-size: 20px;
+    cursor: pointer;
+    opacity: 0;
+    filter: alpha(opacity=0);
+  }
+
+.image-preview-input-title {
+  margin-left: 2px;
+}
+
+#container-fav {
+  margin-top: 14vh;
+  color: #060505;
+}
+
+@media (min-width: 576px) {
+  .modal-dialog{
+    max-width: 560px;
+  }
 }

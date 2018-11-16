@@ -1,0 +1,30 @@
+﻿
+@{
+  ViewData["Title"] = "Super heróis favoritos";
+}
+
+@model IList<Core.Entity.SuperHero>
+
+<div class="container-fluid" id="container-fav">
+  <div class="display-4 text-center jumbotron-fluid mt-5">
+    @(Model.Count == 0 ? "Não existem heróis favoritos!" : "Heróis favoritos")
+  </div>
+
+  <div class="container-fluid">
+    @foreach (var super in Model)
+    {
+      <div class="row mt-3" style="
+          box-shadow: 1px 2px 15px rgba(0, 0, 0, 0.25), -2px -1px 15px rgba(0, 0, 0, 0.25);
+          border-radius: 3em; margin: auto; width: 90%; padding: 1%;">
+        <div class="col-lg-3 d-flex justify-content-center">
+          <img style="height: 16em; width: 13em;" 
+               src="~/images/superheroes/@(super.Id).jpg" />
+        </div>
+        <div class="col-lg-9">
+          <p style="color: var(--corP);">@super.Name</p>
+          <p>@super.Description</p>
+        </div>
+      </div>
+    }
+  </div>
+</div>

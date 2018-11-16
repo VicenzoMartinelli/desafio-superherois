@@ -1,94 +1,123 @@
 ﻿@{
-    ViewData["Title"] = "Home Page";
+  ViewData["Title"] = "Portal";
 }
+@model HomePageModel
 
-<div id="myCarousel" class="carousel slide" data-ride="carousel" data-interval="6000">
-    <ol class="carousel-indicators">
-        <li data-target="#myCarousel" data-slide-to="0" class="active"></li>
-        <li data-target="#myCarousel" data-slide-to="1"></li>
-        <li data-target="#myCarousel" data-slide-to="2"></li>
-    </ol>
-    <div class="carousel-inner" role="listbox">
-        <div class="item active">
-            <img src="~/images/banner1.svg" alt="ASP.NET" class="img-responsive" />
-            <div class="carousel-caption" role="option">
-                <p>
-                    Learn how to build ASP.NET apps that can run anywhere.
-                    <a class="btn btn-default" href="https://go.microsoft.com/fwlink/?LinkID=525028&clcid=0x409">
-                        Learn More
-                    </a>
-                </p>
+<div id="banner" class="container-fluid rounded">
+  <img src="https://wallpapercave.com/wp/wp2436369.jpg" style="width: 100%; height: 76vh;">
+
+  <div class="container-fluid">
+    <div>Armazene tudo sobre seus Superheróis</div>
+  </div>
+</div>
+<div class="container-fluid" id="container-superheroes">
+  <div class="display-4 text-center jumbotron-fluid mt-5">
+    @(Model.Heroes.Count == 0 ? (string.IsNullOrEmpty(Model.Filtro) ? "Cadastre seus heróis agora!" : "Nenhum herói com este nome :(") :  "Heróis e mais heróis")
+  </div>
+
+  <div class="row w-100 mt-5">
+    @foreach (var item in Model.Heroes)
+    {
+      <div id="@item.Id" class="col-lg-3 card" onmouseover="return showOptions(this);" onmouseout="return releaseOptions(this)">
+        <div class="card-body">
+          <div class="options">
+            <div class="favorite" style="@(!item.IsFavorite ? "background-color: #000000;" : "")">
+              <a onclick="return setFavorite(this);"><i class="fa fa-heart"> </i></a>
             </div>
-        </div>
-        <div class="item">
-            <img src="~/images/banner2.svg" alt="Visual Studio" class="img-responsive" />
-            <div class="carousel-caption" role="option">
-                <p>
-                    There are powerful new features in Visual Studio for building modern web apps.
-                    <a class="btn btn-default" href="https://go.microsoft.com/fwlink/?LinkID=525030&clcid=0x409">
-                        Learn More
-                    </a>
-                </p>
+            <div class="update">
+              <a onclick="return editSuper(this)" data-toggle="modal" data-target="#modal-cad"><i class="fa fa-pencil"></i></a>
+            </div><div class="delete" style="">
+              <a onclick="return deleteSuper(this);"><i class="fa fa-times"></i></a>
             </div>
+          </div>
+          <h3>@item.Name</h3>
+          <p>@item.Description</p>
+          <img src="~/images/superheroes/@(item.Id).jpg" />
         </div>
-        <div class="item">
-            <img src="~/images/banner3.svg" alt="Microsoft Azure" class="img-responsive" />
-            <div class="carousel-caption" role="option">
-                <p>
-                    Learn how Microsoft's Azure cloud platform allows you to build, deploy, and scale web apps.
-                    <a class="btn btn-default" href="https://go.microsoft.com/fwlink/?LinkID=525027&clcid=0x409">
-                        Learn More
-                    </a>
-                </p>
-            </div>
-        </div>
-    </div>
-    <a class="left carousel-control" href="#myCarousel" role="button" data-slide="prev">
-        <span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>
-        <span class="sr-only">Previous</span>
-    </a>
-    <a class="right carousel-control" href="#myCarousel" role="button" data-slide="next">
-        <span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>
-        <span class="sr-only">Next</span>
-    </a>
+      </div>
+    }
+  </div>
+
+  @if (Model.Heroes.Count > 0)
+  {
+    <nav aria-label="Page navigation example" class="mt-5">
+      <ul class="pagination pg-blue justify-content-center pagination-lg">
+        <li class="page-item disabled">
+          <a class="page-link" tabindex="-1">Anterior</a>
+        </li>
+        @for (int i = 1; i <= Model.NumPages; i++)
+        {
+          <li class="page-item"><a class="page-link @(i == Model.Page ? "red" : "")">@i</a></li>
+        }
+
+        <li class="page-item">
+          <a class="page-link">Próxima</a>
+        </li>
+      </ul>
+    </nav>
+  }
+
 </div>
 
-<div class="row">
-    <div class="col-md-3">
-        <h2>Application uses</h2>
-        <ul>
-            <li>Sample pages using ASP.NET Core MVC</li>
-            <li>Theming using <a href="https://go.microsoft.com/fwlink/?LinkID=398939">Bootstrap</a></li>
-        </ul>
+<div id="controls">
+  <a class="fab" id="btnNew" data-toggle="modal" data-target="#modal-cad" style="bottom: 117px; right: 48px; font-size: 2.4em; ">
+    <i class="fa fa-plus-square-o"></i>
+  </a>
+  <a asp-action="Favorites" class="fab" id="btnFavs">
+    <i class="fa fa-heart-o"></i>
+  </a>
+</div>
+
+<div class="modal fade" id="modal-cad" tabindex="-1" role="dialog" aria-hidden="true">
+  <div class="modal-dialog modal-notify" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center text-dark bg-white">
+        <h4 class="modal-title w-100 font-weight-bold py-2">Dados do Superherói</h4>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true" class="dark-text">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <div class="tab-content">
+          @using (Html.BeginForm("Save", "Home"))
+          {
+          <form class="tab-pane fade show active" id="frm" role="tabpanel" aria-labelledby="frm-tab">
+            <input type="text" id="txtIdent" name="superhero.Id" style="display: none;" />
+            <div class="md-form mb-5">
+              <i class="fa fa-pied-piper-alt fa-2x prefix text-dark" style=" font-size: 2em;"></i>
+              <input type="text" required id="txtName" name="superhero.Name" class="form-control" onfocus="onEnter(this)" onblur="onExit(this)" />
+              <label for="txtName">Nome do herói</label>
+            </div>
+
+            <div class="md-form">
+              <i class="fa fa-sticky-note prefix text-dark" style="font-size: 41px"></i>
+              <textarea type="text" id="txtDescricao" name="superhero.Description" class="md-textarea form-control" onfocus="onEnter(this)" onblur="onExit(this)" rows="3"></textarea>
+              <label for="txtDescricao">Descrição</label>
+            </div>
+            <label class="">Foto</label>
+            <div class="input-group image-preview align-items-center">
+              <input type="text" required class="form-control image-preview-filename" disabled="disabled">
+              <span class="input-group-btn">
+                <button type="button" class="btn btn-danger image-preview-clear" style="display:none;">
+                  <i class="fa fa-stop-circle-o"></i> Limpar
+                </button>
+
+                <div class="btn btn-indigo image-preview-input text-white">
+                  <span class="fa fa-folder-open-o"></span>
+                  <span class="image-preview-input-title">Procurar</span>
+                  <input required id="inpImage" type="file" accept="image/png, image/jpeg, image/gif" />
+                  <input type="text" id="content" accept="" name="superhero.Picture" style="display: none;" />
+                </div>
+              </span>
+            </div>
+            <div class="modal-footer justify-content-center flex-row">
+              <button type="button" class="btn btn-outline-danger waves-effect btn-lg" data-dismiss="modal">Cancelar</button>
+              <button id="btnSubmit" type="submit" class="btn btn-outline-success waves-effect btn-lg">Confirmar</button>
+            </div>
+          </form>
+          }
+          </div>
+      </div>
     </div>
-    <div class="col-md-3">
-        <h2>How to</h2>
-        <ul>
-            <li><a href="https://go.microsoft.com/fwlink/?LinkID=398600">Add a Controller and View</a></li>
-            <li><a href="https://go.microsoft.com/fwlink/?LinkId=699315">Manage User Secrets using Secret Manager.</a></li>
-            <li><a href="https://go.microsoft.com/fwlink/?LinkId=699316">Use logging to log a message.</a></li>
-            <li><a href="https://go.microsoft.com/fwlink/?LinkId=699317">Add packages using NuGet.</a></li>
-            <li><a href="https://go.microsoft.com/fwlink/?LinkId=699319">Target development, staging or production environment.</a></li>
-        </ul>
-    </div>
-    <div class="col-md-3">
-        <h2>Overview</h2>
-        <ul>
-            <li><a href="https://go.microsoft.com/fwlink/?LinkId=518008">Conceptual overview of what is ASP.NET Core</a></li>
-            <li><a href="https://go.microsoft.com/fwlink/?LinkId=699320">Fundamentals of ASP.NET Core such as Startup and middleware.</a></li>
-            <li><a href="https://go.microsoft.com/fwlink/?LinkId=398602">Working with Data</a></li>
-            <li><a href="https://go.microsoft.com/fwlink/?LinkId=398603">Security</a></li>
-            <li><a href="https://go.microsoft.com/fwlink/?LinkID=699321">Client side development</a></li>
-            <li><a href="https://go.microsoft.com/fwlink/?LinkID=699322">Develop on different platforms</a></li>
-            <li><a href="https://go.microsoft.com/fwlink/?LinkID=699323">Read more on the documentation site</a></li>
-        </ul>
-    </div>
-    <div class="col-md-3">
-        <h2>Run &amp; Deploy</h2>
-        <ul>
-            <li><a href="https://go.microsoft.com/fwlink/?LinkID=517851">Run your app</a></li>
-            <li><a href="https://go.microsoft.com/fwlink/?LinkID=517853">Run tools such as EF migrations and more</a></li>
-            <li><a href="https://go.microsoft.com/fwlink/?LinkID=398609">Publish to Microsoft Azure Web Apps</a></li>
-        </ul>
-    </div>
+  </div>
 </div>
