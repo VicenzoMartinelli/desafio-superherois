@@ -1,10 +1,10 @@
-# DockerAZ-14-ASPNETCore
-## from scratch to production with docker and jenkins
+## Desáfio Super heróis
 
+#Instalação
+Os primeiros passos que devem ser verificados são:
 
-Conteúdo em PT-BR | This content was published with a video and is part of Docker from A to Z web serie.
+ - Existência da IDE Visual Studio 2017
+ - Existência da SDK do .NET Core na máquina e dos demais componentes necessários para desenvolvimento em .NET Core ( é possível instalá-los pelo Visual Studio Installer)
 
-Publicação | https://gago.io/blog/docker-de-z-14-aspnet-core-from-scratch-to-production-with-docker-jenkins-pt-br/
-
-Youtube | https://youtu.be/PH0SqgTSocs
-
+Tendo estes 2 requisitos ok, basta clonar o repositório e abrir a solução que existe na pasta no visual Studio.
+Assim ja estará em funcionamento.
