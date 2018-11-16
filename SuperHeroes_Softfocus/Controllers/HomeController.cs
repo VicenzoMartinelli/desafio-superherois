@@ -65,8 +65,10 @@ namespace SuperHeroes_Softfocus.Controllers
         var content = superhero.Picture.Split(",")[1];
         var fileName = heroSave.Id;
 
-        var path = Path.Combine(_appEnvironment.WebRootPath, @"images\superheroes") + $@"\{fileName + ".jpg"}";
-
+        var path = Path.Combine(_appEnvironment.WebRootPath, @"images/superheroes") + $@"/{fileName + ".jpg"}";
+        #if DEBUG
+        path = Path.Combine(_appEnvironment.WebRootPath, @"images\superheroes") + $@"\{fileName + ".jpg"}";
+        #endif
         System.IO.File.Delete(path);
 
         using (FileStream SourceStream = System.IO.File.Open(path, FileMode.OpenOrCreate))

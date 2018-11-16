@@ -22,9 +22,9 @@ namespace Api
       if(db == null)
       {
         var mongoClient = new MongoClient(_configuration.GetConnectionString("Connection"));
-        db = mongoClient.GetDatabase("superheroes");
+        db = mongoClient.GetDatabase("desafio-superherois");
 
-        bool isAlive = db.RunCommandAsync((Command<BsonDocument>)"{ping:1}").Wait(1000);
+        bool isAlive = db.RunCommandAsync((Command<BsonDocument>)"{ping:1}").Wait(10000);
 
         if (!isAlive)
           throw new Exception();

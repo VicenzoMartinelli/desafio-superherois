@@ -32,7 +32,10 @@ namespace SuperHeroes_Softfocus.Models
       try
       {
         var result = await _repository.GetByIdAsync<SuperHero>(id);
-        var image  = "data:image/jpeg;base64," + Convert.ToBase64String(System.IO.File.ReadAllBytes(Path.Combine(_appEnvironment.WebRootPath, @"images\superheroes") + $@"\{id + ".jpg"}"));
+        var image  = "data:image/jpeg;base64," + Convert.ToBase64String(System.IO.File.ReadAllBytes(Path.Combine(_appEnvironment.WebRootPath, @"images/superheroes") + $@"/{id + ".jpg"}"));
+        #if DEBUG
+        image  = "data:image/jpeg;base64," + Convert.ToBase64String(System.IO.File.ReadAllBytes(Path.Combine(_appEnvironment.WebRootPath, @"images\superheroes") + $@"\{id + ".jpg"}"));
+        #endif
         return Ok(new
         {
           result.Id,
@@ -64,8 +67,10 @@ namespace SuperHeroes_Softfocus.Models
           var image = default(string);
           try
           {
+            image = "data:image/jpeg;base64," + Convert.ToBase64String(System.IO.File.ReadAllBytes(Path.Combine(_appEnvironment.WebRootPath, @"images/superheroes") + $@"/{x.Id + ".jpg"}"));
+            #if DEBUG
             image = "data:image/jpeg;base64," + Convert.ToBase64String(System.IO.File.ReadAllBytes(Path.Combine(_appEnvironment.WebRootPath, @"images\superheroes") + $@"\{x.Id + ".jpg"}"));
-
+            #endif
           }
           catch (Exception)
           {
@@ -96,8 +101,11 @@ namespace SuperHeroes_Softfocus.Models
       {
         var Status = await this._repository.DeleteAsync<SuperHero>(id);
 
-        System.IO.File.Delete(Path.Combine(_appEnvironment.WebRootPath, @"images\superheroes") + $@"\{id + ".jpg"}");
+        System.IO.File.Delete(Path.Combine(_appEnvironment.WebRootPath, @"images/superheroes") + $@"/{id + ".jpg"}");
 
+        #if DEBUG
+        System.IO.File.Delete(Path.Combine(_appEnvironment.WebRootPath, @"images\superheroes") + $@"\{id + ".jpg"}");
+        #endif
         return Ok();
       }
       catch(Exception e)
